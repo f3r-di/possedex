@@ -436,6 +436,9 @@ function debunkSite(url, tab_id, display){
                                 message     : messages[classement],
                                 bandeau_msg : bandeau_msgs[classement],
                                 icone       : icones[classement],
+                                proprietaire1 : proprietaires[0],
+                                fortune1 : fortunes[0],
+                                marque1 : marques[1],
                                 persistant  : results.persistant
                             }, function(response) { // note
                             });

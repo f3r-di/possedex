@@ -34,5 +34,10 @@
     "activeTab",
 
     "http://possedex.info/database.json"
+  ],
+    "web_accessible_resources": [
+        "fonts/*",
+        "img/*.png",
+         "img/*.gif"
   ]
 }
