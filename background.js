@@ -91,7 +91,7 @@ let col_influence3    = 19;
 
 let messages = {
  inconnu     :    "non classé",
- capital     :    "Ce média dépend d'intérêts industriels, financiers, ou de groupe de presse.",
+ capital     :    "Ce média appartient à",
  etat        :    "Ce média dépend d'un ou plusieurs états",
  independant :  "Ce média est indépendant vis à vis d'intérêts industriels, financiers, groupe de presse ou étatique.",
  rien        : "rien"
@@ -106,7 +106,7 @@ rien        : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr
 
 let bandeau_msgs = {
     inconnu     : "Inconnu",
-    capital     : "Liens capitalistiques",
+    capital     : "Ce média appartient à ",
     etat        : "Liens étatiques",
     independant : "Indépendant financièrement",
     rien        : "rien"
