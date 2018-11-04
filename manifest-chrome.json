@@ -39,5 +39,12 @@
       "css/content.css",
         "fonts/*",
         "*.ttf"
-    ]
+    ],
+    "web_accessible_resources": [
+      "css/content.css",
+    "fonts/*",
+        "*.ttf",
+        "*.gif",
+        "img/prop/*"
+  ]
 }
