@@ -130,33 +130,14 @@ var browser = browser || chrome;
     
     //import de la fueille de style css
     function importCSS() {
-            var linkTag = document.createElement ("link");
+        var linkTag = document.createElement ("link");
         linkTag.href = getBrowser().extension.getURL("css/content.css");
-        
-            /*
-            if(getBrowser()== "Firefox"){
-                linkTag.href = browser.extension.getURL("css/content.css");
-            }else if(getBrowser() == "Chrome"){
-                linkTag.href = chrome.extension.getURL("css/content.css");
-            }else{console.log("Type de browser non identifé");}
-            */
-            linkTag.rel = "stylesheet";
-            var head = document.getElementsByTagName ("head")[0];
-            head.appendChild (linkTag);
+        linkTag.rel = "stylesheet";
+        var head = document.getElementsByTagName("head")[0];
+        head.appendChild (linkTag);
     }
-    //pour pouvoir détecter le type de navigateur
-    /*
-    function getBrowser() {
-        if (typeof chrome !== "undefined") {
-            if (typeof browser !== "undefined") {
-              return "Firefox";
-            } else {
-              return "Chrome";
-            }
-        } else {
-            return "Unknown";
-        }
-    }*/
+
+    
      function getBrowser() {
         if (typeof chrome !== "undefined") {
             if (typeof browser !== "undefined") {
@@ -220,17 +201,74 @@ var browser = browser || chrome;
                 proprio_a.innerText = " "+request.proprietaires[i].nom; // no html
                 proprio_a.href      = request.proprietaires[i].url; // no html
                 
-                // Détails
-                var proprio_rang = createChild(proprio_text,"span","possedex-propdetail");
+                // Fortune
+                if(request.proprietaires[i].fortune){
+                    var proprio_rang = createChild(proprio_text,"span","possedex-propdetail");
+                    if(request.proprietaires[i].fortune == 1){ var fortune_phrase = "1ère fortune de France";}
+                    else{ var fortune_phrase = request.proprietaires[i].fortune + "ème fortune de France"; }
+                    appendText(proprio_rang, fortune_phrase);
+                };
+                
+                // Possessions 
                 var proprio_boite = createChild(proprio_text,"span","possedex-propdetail");
-                appendText(proprio_rang, "1ère fortune française");
-                appendText(proprio_boite, "Dirige LVMH");
+                // Liste des possessions avec le pourcentage entre parenthese
+                let possessions_liste = request.proprietaires[i].possessions.map(a => a.nom + " ("+ a.valeur+"%)");
+                // La transformer en phrase (si plusieurs entreprises : "x,x et x" au lieu de "x,x,x")
+                var possessions_phrase = "Dirige " 
+                for (var j in possessions_liste) {
+                    if(j==0){possessions_phrase += possessions_liste[j] ;}
+                    else{ 
+                        if(j == (possessions_liste.length-1) ){ possessions_phrase += " et " + possessions_liste[j] ;}
+                        else{ possessions_phrase +=", "+ possessions_liste[j]; }
+                    }
+                }
+                appendText(proprio_boite, possessions_phrase);
                 
                 
-                // Intéret
+                // Medias
                 var proprio_interet = createChild(proprio_div,"span","possedex-propint");
-                appendText(proprio_interet, request.proprietaires[i].nom +" a des intérêts dans le luxe, la saucisse et le pastaga");
                 
+                
+                
+                /*
+                for (var k in request.proprietaires[i].medias) {
+                    if(k == 0){medias_phrase += request.proprietaires[i].medias[k] ;}
+                    else{ 
+                        if(k == (request.proprietaires[i].medias.length-1) ){ medias_phrase += " et " + request.proprietaires[i].medias[k] ;}
+                        else{ medias_phrase +=", "+ request.proprietaires[i].medias[k]; }
+                    }
+                }
+                */
+                
+                var medias_phrase = "";
+                var nbmax = 2;
+                
+                for (var k=0; (k < request.proprietaires[i].medias.length) &&  (k < nbmax+1); k++) {
+                    if(k==0){
+                        medias_phrase += request.proprietaires[i].nom + " a des parts dans " + request.proprietaires[i].medias[k] ;
+                    }else if(k == (request.proprietaires[i].medias.length-1) ){ 
+                        medias_phrase += " et " + request.proprietaires[i].medias[k] ;
+                    }else if(k == (nbmax) && (request.proprietaires[i].medias.length > nbmax)){
+                        medias_phrase += " et " + (request.proprietaires[i].medias.length-nbmax) + " autres media";
+                    }else{
+                        medias_phrase +=", "+ request.proprietaires[i].medias[k]; 
+                    }
+                    console.log(" k=" + k +" length="+ request.proprietaires[i].medias.length + " "+ medias_phrase);
+                    
+                }
+                
+                appendText(proprio_interet, medias_phrase);
+                
+                console.log(request);
+
+                /*
+                console.log(request.proprietaires[i].media.length);
+
+                // Test
+                //chrome.extension.getBackgroundPage().console.log('saluttoi');
+                console.log(request.proprietaires[i].possessions[0].nom);
+                console.log(possessions_noms);
+                */
             }
             
             /*

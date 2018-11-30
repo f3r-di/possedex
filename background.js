@@ -61,7 +61,7 @@ var browser = browser || chrome;
 
 var checkSite_in_progress = false;
 
-var _debug = 0; // 0=quiet, 1=verbose, 2=more verbose, 3= very very verbose, 4=even more. 5 very very verbose
+var _debug = 1; // 0=quiet, 1=verbose, 2=more verbose, 3= very very verbose, 4=even more. 5 very very verbose
 var _debug_show_level = true;
 if (_debug) {
     dbg(1, "DEBUG LEVEL");
@@ -432,6 +432,20 @@ var Possedex = {
 
                 if (entity.hasOwnProperty('est_possede')) {
                     entity.proprietaires = Possedex.getAllParentsForEntity(entity);
+                    
+                    
+                    for(j in entity.proprietaires){
+                        /*
+                        entity.proprietaires[j].medias = Possedex.getAllChildrenForEntity(entityP);
+                        */
+                        var entityP_id = Possedex.getEntityIdFromNom(entity.proprietaires[j].nom);
+                        var entityP = Possedex.data.objets[entityP_id];
+                        var medias_entity = Possedex.getAllChildrenForEntity(entityP);
+                        let medias_nom = medias_entity.map(a => a.nom);
+                        entity.proprietaires[j].medias = medias_nom;
+                    }
+                   
+                    
                     //entity.proprietaires = []
                     //console && console.log("POUET POUET");
                     //entity.est_possede.forEach(function(el, i) {
