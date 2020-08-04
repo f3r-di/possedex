@@ -756,7 +756,7 @@ browser.windows.onFocusChanged.addListener(function (windowId) {
 // déclenché quand l'icone d'action du navigateur est cliqué
 browser.browserAction.onClicked.addListener(function (tab) {
     dbg(1, "onClicked");
-    checkSite(false);
+    checkSite(true);
 });
 
 
